@@ -16,7 +16,7 @@ function run_test() {
 OUTPUT=/tmp/run_test$$
 run_test > $OUTPUT 2>&1 &
 RUN_TEST_PID=$!
-watch -c "grep 'Requests per second:' $OUTPUT |sort -n|tail -25"
+watch -c "grep 'Requests per second:' $OUTPUT |cut -d ' ' -f 7|sort -n|tail -25"
 kill $RUN_TEST_PID
 echo "output is in $OUTPUT"
 

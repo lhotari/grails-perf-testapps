@@ -15,4 +15,18 @@ kernel.shmmax=134217728
 kernel.shmall=2097152
 net.ipv4.ip_local_port_range = 18000    65535
 vm.swappiness=0
+
+# http://fasterdata.es.net/host-tuning/linux/
+# increase TCP max buffer size settable using setsockopt()
+net.core.rmem_max = 16777216 
+net.core.wmem_max = 16777216 
+# increase Linux autotuning TCP buffer limit 
+net.ipv4.tcp_rmem = 4096 87380 16777216
+net.ipv4.tcp_wmem = 4096 65536 16777216
+# increase the length of the processor input queue
+net.core.netdev_max_backlog = 30000
+# recommended default congestion control is htcp 
+net.ipv4.tcp_congestion_control=htcp
+# recommended for hosts with jumbo frames enabled
+net.ipv4.tcp_mtu_probing=1
 EOF

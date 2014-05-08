@@ -46,7 +46,7 @@ grails.project.dependency.resolution = {
 
         mavenLocal()
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
-        //mavenCentral()
+        mavenCentral()
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
@@ -60,7 +60,7 @@ grails.project.dependency.resolution = {
 
     plugins {
         //runtime ":hibernate:3.6.10.BUILD-SNAPSHOT"
-        build ":tomcat:7.0.42"
+        build ":tomcat:7.0.52.1"
         //runtime ":jquery:1.9.1"
         //runtime ":resources:1.2"
 

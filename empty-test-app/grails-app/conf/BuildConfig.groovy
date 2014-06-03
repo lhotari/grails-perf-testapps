@@ -7,7 +7,7 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
-def yjpConfig = [jvmArgs: ["-agentpath:/opt/yjp/bin/linux-x86-64/libyjpagent.so=delay=10000,disablealloc,disablej2ee,noj2ee,builtinprobes=none,sampling,monitors,onexit=snapshot,telemetryperiod=250"]]
+def yjpConfig = [jvmArgs: ["-agentpath:/Applications/yjp.app/bin/mac/libyjpagent.jnilib=delay=10000,disablealloc,disablej2ee,noj2ee,builtinprobes=none,sampling,monitors,onexit=snapshot,telemetryperiod=250"]]
 forkConfig = [maxMemory: 768, minMemory: 768, debug: false, maxPerm: 256]
 grails.project.fork = [
    test: forkConfig, // configure settings for the test-app JVM

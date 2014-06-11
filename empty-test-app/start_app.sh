@@ -1,2 +1,2 @@
 #!/bin/bash
-grails prod run-war
+grails "$@" prod run-war

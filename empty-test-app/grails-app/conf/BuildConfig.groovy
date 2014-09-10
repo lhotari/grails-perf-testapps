@@ -7,7 +7,6 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
-def yjpConfig = [jvmArgs: ["-agentpath:/Applications/yjp.app/bin/mac/libyjpagent.jnilib=delay=10000,disablealloc,probe_disable=*,sampling,monitors,onexit=snapshot,telemetryperiod=250"]]
 forkConfig = [maxMemory: 768, minMemory: 768, debug: false, maxPerm: 256]
 grails.project.fork = [
    test: forkConfig, // configure settings for the test-app JVM
@@ -15,11 +14,6 @@ grails.project.fork = [
    war: forkConfig, // configure settings for the run-war JVM
    console: forkConfig // configure settings for the Swing console JVM
 ]
-
-if (System.getProperty("grails.yjp")) {
-   grails.project.fork.war += yjpConfig
-   println "Using YJP for run-war"
-}
 
 if (System.getProperty("grails.debug")) {
    grails.project.fork.war += [debug: true]
@@ -73,4 +67,11 @@ grails.project.dependency.resolution = {
 
         //compile ':cache:1.0.1'
     }
+}
+def yjpConfig = [jvmArgs: [
+        "-agentpath:/Applications/yjp.app/bin/mac/libyjpagent.jnilib=delay=30000,disablealloc,probe_disable=*,sampling,monitors,onexit=snapshot,telemetryperiod=250"
+    ]]
+if (System.getProperty("grails.yjp")) {
+    grails.project.fork.war += yjpConfig
+    println "Using YJP for run-war"
 }

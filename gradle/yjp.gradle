@@ -1,0 +1,33 @@
+// usage in gradle file
+// apply from:'/path_to/yjp.gradle'
+// when launching use "gradle -Pyjp.enabled=tracing run" or "gradle -Pyjp.enabled=sampling run"
+
+ext {
+   // default settings are for MacOSX and YJP installed with name "yjp" in Applications
+   // you can use YJP_AGENT_PATH environment variable to specify the location of yjp's JVM agent
+   yjpHome = System.getenv('YJP_HOME') ?: '/Applications/yjp.app/Contents/Resources'
+   yjpAgentPath = System.getenv('YJP_AGENT_PATH') ?: "$yjpHome/bin/mac/libyjpagent.jnilib".toString()
+   yjpCommonOptions = "delay=0,disablealloc,probe_disable=*,monitors,onexit=snapshot"
+   yjpSamplingOptions = "telemetryperiod=100"
+   yjpTracingOptions = ""
+}
+
+run {
+    // http://www.yourkit.com/docs/java/help/startup_options.jsp
+    if(project.hasProperty("yjp.enabled")) {
+      switch(project.getProperty("yjp.enabled")) {
+        case 'none':
+        case '':
+        case 'false':
+        case 'no':
+            break
+        case 'tracing':
+            jvmArgs += ["-agentpath:$yjpAgentPath=tracing,$yjpTracingOptions,$yjpCommonOptions"]
+            break
+        case 'sampling':
+        default:
+            jvmArgs += ["-agentpath:$yjpAgentPath=sampling,$yjpSamplingOptions,$yjpCommonOptions"]
+            break
+      }
+    }
+}

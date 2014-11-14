@@ -1,0 +1,45 @@
+// add configuration for btrace (https://github.com/jbachorik/btrace)
+// usage:
+// apply from:'/path/to/btrace.gradle'
+// place btrace scripts in btrace directory
+sourceSets {
+    btrace {
+        java {
+            srcDir 'btrace'
+        }
+    }
+}
+
+configurations {
+  btraceAgent
+}
+
+ext {
+    if(!project.hasProperty("btraceHome")) {
+        btraceHome = System.getenv("BTRACE_HOME") ?: "${System.getProperty('user.home')}/tools/btrace".toString()
+    }
+}
+
+dependencies {
+    // btrace 1.2.5.1 version isn't available in maven
+    // download from https://kenai.com/projects/btrace/downloads/directory/releases
+    // use BTRACE_HOME environment variable to set home directory
+    compile files("$btraceHome/build/btrace-boot.jar")
+    btraceCompile files("$btraceHome/build/btrace-boot.jar")
+    btraceAgent files("$btraceHome/build/btrace-agent.jar")
+}
+
+task btraceInstall(type: Copy, dependsOn: btraceClasses) {
+    from(compileBtraceJava.outputs.files)
+    into("$buildDir/btrace-scripts")
+    eachFile { details ->
+        details.path = details.name
+    }
+    includeEmptyDirs = false
+}
+
+run {
+    dependsOn(btraceInstall)
+    def btraceAgentJar = "$btraceHome/build/btrace-agent.jar"
+    jvmArgs += ["-Xverify:none","-javaagent:$btraceAgentJar=scriptdir=$buildDir/btrace-scripts,stdout=true"]
+}

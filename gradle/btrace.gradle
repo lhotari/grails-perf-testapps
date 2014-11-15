@@ -1,3 +1,6 @@
+import groovy.text.*
+import groovy.text.markup.*
+
 // add configuration for btrace (https://github.com/jbachorik/btrace)
 // usage:
 // apply from:'/path/to/btrace.gradle'
@@ -38,8 +41,49 @@ task btraceInstall(type: Copy, dependsOn: btraceClasses) {
     includeEmptyDirs = false
 }
 
+task generateProbeXml << {
+    File probesTxt = new File('btrace-probes/profiler-probes.txt')
+    if(probesTxt.exists()) {
+        def probes = []
+        probesTxt.eachLine { line ->
+            if(line.trim()) {
+                probes << line.trim()
+            }
+        }
+        TemplateConfiguration config = new TemplateConfiguration()
+        config.autoIndent = true
+        config.autoNewLine = true
+        MarkupTemplateEngine engine = new MarkupTemplateEngine(config)  
+        Template xmltemplate = engine.createTemplate('''
+ "btrace-probes"(namespace:"profiler-probes") {
+    ["profiler-entry","profiler-exit"].each { phase -> 
+        probe(name:phase) {
+            for(probeentry in probes) {
+                def matcher = (probeentry =~ /^([^\\/]+)\\.(.+)$/)[0]
+                def classname = matcher[1]
+                def methodname = matcher[2]
+                map {
+                    clazz(classname)
+                    method(methodname)
+                    if(phase=="profiler-exit") {
+                        location {
+                            value("RETURN")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+            ''')
+        new File('btrace-probes/profiler-probes.xml').withWriter { writer ->
+            xmltemplate.make([probes: probes]).writeTo(writer)
+        }  
+    }
+}
+
 run {
-    dependsOn(btraceInstall)
+    dependsOn(btraceInstall, generateProbeXml)
     def btraceAgentJar = "$btraceHome/build/btrace-agent.jar"
     jvmArgs += ["-Xshare:off","-Xverify:none","-javaagent:$btraceAgentJar=scriptdir=$buildDir/btrace-scripts,probeDescPath=${project.file('btrace-probes')},stdout=true,noServer=true"]
 }

@@ -41,5 +41,5 @@ task btraceInstall(type: Copy, dependsOn: btraceClasses) {
 run {
     dependsOn(btraceInstall)
     def btraceAgentJar = "$btraceHome/build/btrace-agent.jar"
-    jvmArgs += ["-Xverify:none","-javaagent:$btraceAgentJar=scriptdir=$buildDir/btrace-scripts,stdout=true"]
+    jvmArgs += ["-Xshare:off","-Xverify:none","-javaagent:$btraceAgentJar=scriptdir=$buildDir/btrace-scripts,probeDescPath=${project.file('btrace-probes')},stdout=true,noServer=true"]
 }

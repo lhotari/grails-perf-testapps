@@ -41,7 +41,7 @@ task btraceInstall(type: Copy, dependsOn: btraceClasses) {
     includeEmptyDirs = false
 }
 
-task generateProbeXml << {
+task generateProfilerProbeXml << {
     File probesTxt = new File('btrace-probes/profiler-probes.txt')
     if(probesTxt.exists()) {
         def probes = []
@@ -82,8 +82,52 @@ task generateProbeXml << {
     }
 }
 
+
+task generateLegstopwatchProbeXml << {
+    File probesTxt = new File('btrace-probes/legstopwatch-probes.txt')
+    if(probesTxt.exists()) {
+        def probes = []
+        probesTxt.eachLine { line ->
+            if(line.trim()) {
+                probes << line.trim()
+            }
+        }
+        TemplateConfiguration config = new TemplateConfiguration()
+        config.autoIndent = true
+        config.autoNewLine = true
+        MarkupTemplateEngine engine = new MarkupTemplateEngine(config)  
+        Template xmltemplate = engine.createTemplate('''
+ "btrace-probes"(namespace:"legstopwatch-probes") {
+    probe(name:"legstopwatch-probe") {
+        for(probeentry in probes) {
+            def parts = probeentry.split(":")
+            def classname = parts[0]
+            def methodname = parts.size() > 2 ? parts[1] : "/.+/"
+            def linenumber = parts[-1]
+            map {
+                clazz(classname)
+                method(methodname)
+                location {
+                    value("LINE")
+                    line(linenumber)
+                }
+            }
+        }
+    }
+}
+            ''')
+        new File('btrace-probes/legstopwatch-probes.xml').withWriter { writer ->
+            xmltemplate.make([probes: probes]).writeTo(writer)
+        }  
+    }
+}
+
 run {
-    dependsOn(btraceInstall, generateProbeXml)
+    dependsOn(btraceInstall, generateProfilerProbeXml, generateLegstopwatchProbeXml)
     def btraceAgentJar = "$btraceHome/build/btrace-agent.jar"
-    jvmArgs += ["-Xshare:off","-Xverify:none","-javaagent:$btraceAgentJar=scriptdir=$buildDir/btrace-scripts,probeDescPath=${project.file('btrace-probes')},stdout=true,noServer=true"]
+    def debugMode = false
+    if(project.hasProperty("btraceDebug") && project.getProperty("btraceDebug")) {
+        debugMode = true
+    }
+    jvmArgs += ["-Xshare:off","-Xverify:none","-javaagent:$btraceAgentJar=scriptdir=$buildDir/btrace-scripts,probeDescPath=${project.file('btrace-probes')},stdout=true,noServer=true${debugMode ? ',debug=true' : ''}".toString()]
 }

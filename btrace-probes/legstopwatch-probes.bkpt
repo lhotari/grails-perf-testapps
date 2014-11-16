@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<breakpoints>
+<breakpoint enabled="true" persistant="true" registered="true">
+<resource path="/" type="8"/>
+<marker charStart="10223" lineNumber="276" type="org.eclipse.jdt.debug.javaLineBreakpointMarker">
+<attrib name="charStart" value="10223"/>
+<attrib name="org.eclipse.jdt.debug.core.suspendPolicy" value="2"/>
+<attrib name="org.eclipse.jdt.debug.ui.JAVA_ELEMENT_HANDLE_ID" value="=grails-console/\/Users\/lari\/.gradle\/caches\/modules-2\/files-2.1\/org.springframework.boot\/spring-boot\/1.2.0.RC1\/cda854598512ef123e32c24f840e55395a9056fa\/spring-boot-1.2.0.RC1.jar&lt;org.springframework.boot(SpringApplication.class[SpringApplication"/>
+<attrib name="charEnd" value="10303"/>
+<attrib name="org.eclipse.debug.core.enabled" value="true"/>
+<attrib name="message" value="Line breakpoint:SpringApplication [line: 276] - run(String...)"/>
+<attrib name="org.eclipse.debug.core.id" value="org.eclipse.jdt.debug"/>
+<attrib name="org.eclipse.jdt.debug.core.typeName" value="org.springframework.boot.SpringApplication"/>
+<attrib name="org.eclipse.jdt.internal.core.JavaModelManager.handleId" value="=grails-console/\/Users\/lari\/.gradle\/caches\/modules-2\/files-2.1\/org.springframework.boot\/spring-boot\/1.2.0.RC1\/cda854598512ef123e32c24f840e55395a9056fa\/spring-boot-1.2.0.RC1.jar&lt;org.springframework.boot(SpringApplication.class"/>
+<attrib name="workingset_name" value=""/>
+<attrib name="workingset_id" value="org.eclipse.debug.ui.breakpointWorkingSet"/>
+</marker>
+</breakpoint>
+<breakpoint enabled="true" persistant="true" registered="true">
+<resource path="/" type="8"/>
+<marker charStart="10452" lineNumber="283" type="org.eclipse.jdt.debug.javaLineBreakpointMarker">
+<attrib name="charStart" value="10452"/>
+<attrib name="org.eclipse.jdt.debug.core.suspendPolicy" value="2"/>
+<attrib name="org.eclipse.jdt.debug.ui.JAVA_ELEMENT_HANDLE_ID" value="=grails-console/\/Users\/lari\/.gradle\/caches\/modules-2\/files-2.1\/org.springframework.boot\/spring-boot\/1.2.0.RC1\/cda854598512ef123e32c24f840e55395a9056fa\/spring-boot-1.2.0.RC1.jar&lt;org.springframework.boot(SpringApplication.class[SpringApplication"/>
+<attrib name="charEnd" value="10518"/>
+<attrib name="org.eclipse.debug.core.enabled" value="true"/>
+<attrib name="message" value="Line breakpoint:SpringApplication [line: 283] - run(String...)"/>
+<attrib name="org.eclipse.debug.core.id" value="org.eclipse.jdt.debug"/>
+<attrib name="org.eclipse.jdt.debug.core.typeName" value="org.springframework.boot.SpringApplication"/>
+<attrib name="org.eclipse.jdt.internal.core.JavaModelManager.handleId" value="=grails-console/\/Users\/lari\/.gradle\/caches\/modules-2\/files-2.1\/org.springframework.boot\/spring-boot\/1.2.0.RC1\/cda854598512ef123e32c24f840e55395a9056fa\/spring-boot-1.2.0.RC1.jar&lt;org.springframework.boot(SpringApplication.class"/>
+<attrib name="workingset_name" value=""/>
+<attrib name="workingset_id" value="org.eclipse.debug.ui.breakpointWorkingSet"/>
+</marker>
+</breakpoint>
+<breakpoint enabled="true" persistant="true" registered="true">
+<resource path="/" type="8"/>
+<marker charStart="10519" lineNumber="284" type="org.eclipse.jdt.debug.javaLineBreakpointMarker">
+<attrib name="charStart" value="10519"/>
+<attrib name="org.eclipse.jdt.debug.core.suspendPolicy" value="2"/>
+<attrib name="org.eclipse.jdt.debug.ui.JAVA_ELEMENT_HANDLE_ID" value="=grails-console/\/Users\/lari\/.gradle\/caches\/modules-2\/files-2.1\/org.springframework.boot\/spring-boot\/1.2.0.RC1\/cda854598512ef123e32c24f840e55395a9056fa\/spring-boot-1.2.0.RC1.jar&lt;org.springframework.boot(SpringApplication.class[SpringApplication"/>
+<attrib name="charEnd" value="10562"/>
+<attrib name="org.eclipse.debug.core.enabled" value="true"/>
+<attrib name="message" value="Line breakpoint:SpringApplication [line: 284] - run(String...)"/>
+<attrib name="org.eclipse.debug.core.id" value="org.eclipse.jdt.debug"/>
+<attrib name="org.eclipse.jdt.debug.core.typeName" value="org.springframework.boot.SpringApplication"/>
+<attrib name="org.eclipse.jdt.internal.core.JavaModelManager.handleId" value="=grails-console/\/Users\/lari\/.gradle\/caches\/modules-2\/files-2.1\/org.springframework.boot\/spring-boot\/1.2.0.RC1\/cda854598512ef123e32c24f840e55395a9056fa\/spring-boot-1.2.0.RC1.jar&lt;org.springframework.boot(SpringApplication.class"/>
+<attrib name="workingset_name" value=""/>
+<attrib name="workingset_id" value="org.eclipse.debug.ui.breakpointWorkingSet"/>
+</marker>
+</breakpoint>
+<breakpoint enabled="true" persistant="true" registered="true">
+<resource path="/" type="8"/>
+<marker charStart="10806" lineNumber="293" type="org.eclipse.jdt.debug.javaLineBreakpointMarker">
+<attrib name="charStart" value="10806"/>
+<attrib name="org.eclipse.jdt.debug.core.suspendPolicy" value="2"/>
+<attrib name="org.eclipse.jdt.debug.ui.JAVA_ELEMENT_HANDLE_ID" value="=grails-console/\/Users\/lari\/.gradle\/caches\/modules-2\/files-2.1\/org.springframework.boot\/spring-boot\/1.2.0.RC1\/cda854598512ef123e32c24f840e55395a9056fa\/spring-boot-1.2.0.RC1.jar&lt;org.springframework.boot(SpringApplication.class[SpringApplication"/>
+<attrib name="charEnd" value="10846"/>
+<attrib name="org.eclipse.debug.core.enabled" value="true"/>
+<attrib name="message" value="Line breakpoint:SpringApplication [line: 293] - run(String...)"/>
+<attrib name="org.eclipse.debug.core.id" value="org.eclipse.jdt.debug"/>
+<attrib name="org.eclipse.jdt.debug.core.typeName" value="org.springframework.boot.SpringApplication"/>
+<attrib name="org.eclipse.jdt.internal.core.JavaModelManager.handleId" value="=grails-console/\/Users\/lari\/.gradle\/caches\/modules-2\/files-2.1\/org.springframework.boot\/spring-boot\/1.2.0.RC1\/cda854598512ef123e32c24f840e55395a9056fa\/spring-boot-1.2.0.RC1.jar&lt;org.springframework.boot(SpringApplication.class"/>
+<attrib name="workingset_name" value=""/>
+<attrib name="workingset_id" value="org.eclipse.debug.ui.breakpointWorkingSet"/>
+</marker>
+</breakpoint>
+</breakpoints>

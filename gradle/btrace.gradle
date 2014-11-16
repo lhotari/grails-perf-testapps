@@ -84,14 +84,30 @@ task generateProfilerProbeXml << {
 
 
 task generateLegstopwatchProbeXml << {
+    def probes = []
     File probesTxt = new File('btrace-probes/legstopwatch-probes.txt')
     if(probesTxt.exists()) {
-        def probes = []
         probesTxt.eachLine { line ->
             if(line.trim()) {
-                probes << line.trim()
+                def parts = line.trim().split(":")
+                def classname = parts[0]
+                def methodname = parts.size() > 2 ? parts[1] : "/.+/"
+                def linenumber = parts[-1]
+                probes << [classname, methodname, linenumber]
             }
         }
+    }
+    File probesEclipseBreakpoints = new File('btrace-probes/legstopwatch-probes.bkpt')
+    if(probesEclipseBreakpoints.exists()) {
+        def breakpointsRoot = new XmlSlurper().parse(probesEclipseBreakpoints)
+        breakpointsRoot.breakpoint.marker.each { marker ->
+            def classname = marker.attrib.find { it.@name == 'org.eclipse.jdt.debug.core.typeName' }?.@value?.text()
+            def methodname = "/.+/"
+            def linenumber = marker.@lineNumber.text()
+            probes << [classname, methodname, linenumber]
+        }
+    }
+    if(probes) {
         TemplateConfiguration config = new TemplateConfiguration()
         config.autoIndent = true
         config.autoNewLine = true
@@ -100,10 +116,7 @@ task generateLegstopwatchProbeXml << {
  "btrace-probes"(namespace:"legstopwatch-probes") {
     probe(name:"legstopwatch-probe") {
         for(probeentry in probes) {
-            def parts = probeentry.split(":")
-            def classname = parts[0]
-            def methodname = parts.size() > 2 ? parts[1] : "/.+/"
-            def linenumber = parts[-1]
+            def (classname, methodname, linenumber) = probeentry
             map {
                 clazz(classname)
                 method(methodname)

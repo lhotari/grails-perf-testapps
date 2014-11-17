@@ -28,6 +28,11 @@ dependencies {
     // btrace 1.2.5.1 version isn't available in maven
     // download from https://kenai.com/projects/btrace/downloads/directory/releases
     // use BTRACE_HOME environment variable to set home directory
+
+    // Tested with Java 1.7.0_60 
+    // probe xml files couldn't be read with 1.8.0_25 
+    // bug reported as https://github.com/jbachorik/btrace/issues/100
+
     compile files("$btraceHome/build/btrace-boot.jar")
     btraceAgent files("$btraceHome/build/btrace-agent.jar")
 }

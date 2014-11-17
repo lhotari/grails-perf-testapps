@@ -29,7 +29,6 @@ dependencies {
     // download from https://kenai.com/projects/btrace/downloads/directory/releases
     // use BTRACE_HOME environment variable to set home directory
     compile files("$btraceHome/build/btrace-boot.jar")
-    btraceCompile files("$btraceHome/build/btrace-boot.jar")
     btraceAgent files("$btraceHome/build/btrace-agent.jar")
 }
 

@@ -1,0 +1,12 @@
+// simplify Java Mission Control's Java Flight Recorder (jfr) usage
+// jmc/jfr comes with the Oracle JVM. It's a commercial product.
+// docs for jmc and jfr: https://docs.oracle.com/javacomponents/jmc.htm
+
+// usage in gradle file
+// apply from:'/path_to/jfr.gradle'
+
+run {
+  // FlightRecorderOptions documentation in https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html
+  jvmArgs += ["-XX:+UnlockCommercialFeatures","-XX:+FlightRecorder"]
+  jvmArgs += ["-XX:FlightRecorderOptions=defaultrecording=true,dumponexit=true,dumponexitpath=dumponexit.jfr,globalbuffersize=10M,disk=true"]
+}

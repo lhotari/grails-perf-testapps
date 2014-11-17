@@ -45,9 +45,10 @@ task generateProfilerProbeXml << {
     File probesTxt = new File('btrace-probes/profiler-probes.txt')
     if(probesTxt.exists()) {
         def probes = []
-        probesTxt.eachLine { line ->
-            if(line.trim()) {
-                probes << line.trim()
+        probesTxt.eachLine { inputline ->
+            def line = inputline.trim()
+            if(line && !line.startsWith("#")) {
+                probes << line
             }
         }
         TemplateConfiguration config = new TemplateConfiguration()
@@ -104,9 +105,10 @@ task generateLegstopwatchProbeXml << {
     def probes = []
     File probesTxt = new File('btrace-probes/legstopwatch-probes.txt')
     if(probesTxt.exists()) {
-        probesTxt.eachLine { line ->
-            if(line.trim()) {
-                def parts = line.trim().split(":")
+        probesTxt.eachLine { inputline ->
+            def line = inputline.trim()
+            if(line && !line.startsWith("#")) {
+                def parts = line.split(":")
                 def classname = parts[0]
                 def methodname = parts.size() > 2 ? parts[1] : "/.+/"
                 def linenumber = parts[-1]

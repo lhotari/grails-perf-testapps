@@ -15,6 +15,7 @@ sourceSets {
 
 configurations {
   btraceAgent
+  btraceCompile.extendsFrom(compile)
 }
 
 ext {

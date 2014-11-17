@@ -82,6 +82,23 @@ task generateProfilerProbeXml << {
     }
 }
 
+// reads debugging breakpoints exported from Eclipse
+def readEclipseBreakPoints() {
+    def probes = []
+    File probesEclipseBreakpoints = new File('btrace-probes/legstopwatch-probes.bkpt')
+    if(probesEclipseBreakpoints.exists()) {
+        def breakpointsRoot = new XmlSlurper().parse(probesEclipseBreakpoints)
+        breakpointsRoot.breakpoint.marker.each { marker ->
+            def classname = marker.attrib.find { it.@name == 'org.eclipse.jdt.debug.core.typeName' }?.@value?.text()
+            def methodname = "/.+/"
+            def linenumber = marker.@lineNumber.text()
+            if(classname && linenumber) {
+                probes << [classname, methodname, linenumber]
+            }
+        }
+    }
+    probes
+}
 
 task generateLegstopwatchProbeXml << {
     def probes = []
@@ -93,20 +110,13 @@ task generateLegstopwatchProbeXml << {
                 def classname = parts[0]
                 def methodname = parts.size() > 2 ? parts[1] : "/.+/"
                 def linenumber = parts[-1]
-                probes << [classname, methodname, linenumber]
+                if(classname && linenumber) {
+                    probes << [classname, methodname, linenumber]
+                }
             }
         }
     }
-    File probesEclipseBreakpoints = new File('btrace-probes/legstopwatch-probes.bkpt')
-    if(probesEclipseBreakpoints.exists()) {
-        def breakpointsRoot = new XmlSlurper().parse(probesEclipseBreakpoints)
-        breakpointsRoot.breakpoint.marker.each { marker ->
-            def classname = marker.attrib.find { it.@name == 'org.eclipse.jdt.debug.core.typeName' }?.@value?.text()
-            def methodname = "/.+/"
-            def linenumber = marker.@lineNumber.text()
-            probes << [classname, methodname, linenumber]
-        }
-    }
+    probes.addAll(readEclipseBreakPoints())
     if(probes) {
         TemplateConfiguration config = new TemplateConfiguration()
         config.autoIndent = true
@@ -132,6 +142,12 @@ task generateLegstopwatchProbeXml << {
         new File('btrace-probes/legstopwatch-probes.xml').withWriter { writer ->
             xmltemplate.make([probes: probes]).writeTo(writer)
         }  
+    }
+}
+
+task printEclipseBreakpoints << {
+    readEclipseBreakPoints().each { classname, methodname, linenumber ->
+        println "$classname:$linenumber"
     }
 }
 

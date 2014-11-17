@@ -160,7 +160,15 @@ run {
     if(project.hasProperty("btraceDebug") && project.getProperty("btraceDebug")) {
         debugMode = true
     }
-    jvmArgs += ["-Xshare:off","-Xverify:none","-javaagent:$btraceAgentJar=scriptdir=$buildDir/btrace-scripts,probeDescPath=${project.file('btrace-probes')},stdout=true,noServer=true${debugMode ? ',debug=true' : ''}".toString()]
+    // btrace agent options: https://github.com/jbachorik/btrace/wiki#starting-application-with-btrace
+    def btraceAgentOptions = [
+        scriptdir: "$buildDir/btrace-scripts",
+        probeDescPath: "${project.file('btrace-probes')}",
+        stdout: true,
+        noServer: true,
+        debug: debugMode
+    ]
+    jvmArgs += ["-Xshare:off","-Xverify:none","-javaagent:$btraceAgentJar=${btraceAgentOptions.collect { k, v -> "$k=$v".toString()}.join(',')}"]
 }
 
 if(plugins.hasPlugin("eclipse")) {

@@ -162,3 +162,19 @@ run {
     }
     jvmArgs += ["-Xshare:off","-Xverify:none","-javaagent:$btraceAgentJar=scriptdir=$buildDir/btrace-scripts,probeDescPath=${project.file('btrace-probes')},stdout=true,noServer=true${debugMode ? ',debug=true' : ''}".toString()]
 }
+
+if(plugins.hasPlugin("eclipse")) {
+    eclipse {
+        classpath {
+            plusConfigurations += [configurations.btraceAgent]
+        }
+    }
+}
+
+if(plugins.hasPlugin("idea")) {
+    idea {
+        module {
+            scopes.PROVIDED.plus += [configurations.btraceAgent]
+        }
+    }
+}

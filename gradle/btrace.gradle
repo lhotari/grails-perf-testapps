@@ -54,8 +54,10 @@ task generateProfilerProbeXml << {
         TemplateConfiguration config = new TemplateConfiguration()
         config.autoIndent = true
         config.autoNewLine = true
+        config.declarationEncoding = 'UTF-8'
         MarkupTemplateEngine engine = new MarkupTemplateEngine(config)  
         Template xmltemplate = engine.createTemplate('''
+ xmlDeclaration()
  "btrace-probes"(namespace:"profiler-probes") {
     ["profiler-entry","profiler-exit"].each { phase -> 
         probe(name:phase) {
@@ -77,7 +79,7 @@ task generateProfilerProbeXml << {
     }
 }
             ''')
-        new File('btrace-probes/profiler-probes.xml').withWriter { writer ->
+        new File('btrace-probes/profiler-probes.xml').withWriter('UTF-8') { writer ->
             xmltemplate.make([probes: probes]).writeTo(writer)
         }  
     }
@@ -123,8 +125,10 @@ task generateLegstopwatchProbeXml << {
         TemplateConfiguration config = new TemplateConfiguration()
         config.autoIndent = true
         config.autoNewLine = true
+        config.declarationEncoding = 'UTF-8'
         MarkupTemplateEngine engine = new MarkupTemplateEngine(config)  
         Template xmltemplate = engine.createTemplate('''
+ xmlDeclaration()
  "btrace-probes"(namespace:"legstopwatch-probes") {
     probe(name:"legstopwatch-probe") {
         for(probeentry in probes) {
@@ -141,7 +145,7 @@ task generateLegstopwatchProbeXml << {
     }
 }
             ''')
-        new File('btrace-probes/legstopwatch-probes.xml').withWriter { writer ->
+        new File('btrace-probes/legstopwatch-probes.xml').withWriter('UTF-8') { writer ->
             xmltemplate.make([probes: probes]).writeTo(writer)
         }  
     }

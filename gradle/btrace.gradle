@@ -166,6 +166,7 @@ run {
         probeDescPath: "${project.file('btrace-probes')}",
         stdout: true,
         noServer: true,
+        unsafe: true,
         debug: debugMode
     ]
     jvmArgs += ["-Xshare:off","-Xverify:none","-javaagent:$btraceAgentJar=${btraceAgentOptions.collect { k, v -> "$k=$v".toString()}.join(',')}"]
